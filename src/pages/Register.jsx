@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './Register.css'
 
 function Register({ navigate, login }) {
   const [role, setRole] = useState('tipster')
@@ -8,96 +9,70 @@ function Register({ navigate, login }) {
   const [pass, setPass] = useState('')
 
   const handleRegister = () => {
-    if (!name || !email || !pass) { alert('Omple tots els camps'); return }
+    if (!name || !email || !pass) { alert('Rellena todos los campos'); return }
     login({ name, user, email, role })
   }
 
-  const inputStyle = {
-    width: '100%', background: '#161b24', border: '1px solid #2a3140',
-    color: '#e2e8f0', fontFamily: 'Outfit, sans-serif', fontSize: '14px',
-    padding: '12px 14px', borderRadius: '6px', outline: 'none', boxSizing: 'border-box'
-  }
-
-  const labelStyle = {
-    display: 'block', fontSize: '12px', fontWeight: 600, color: '#94a3b8',
-    textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px'
-  }
-
   return (
-    <div style={{ background: '#06080f', minHeight: '100vh', color: '#e2e8f0', fontFamily: 'Outfit, sans-serif' }}>
+    <div className="register-page">
 
-      {/* NAV */}
-      <nav style={{ padding: '16px 32px', borderBottom: '1px solid #1e2530', background: '#0d1117' }}>
-        <div onClick={() => navigate('landing')} style={{ fontFamily: 'Syne, sans-serif', fontSize: '22px', fontWeight: 800, color: '#fff', cursor: 'pointer' }}>
-          FYB<span style={{ color: '#00ff87' }}>.</span>
+      <nav className="register-nav">
+        <div className="register-logo" onClick={() => navigate('landing')}>
+          FindYour<span>Bet</span>
         </div>
       </nav>
 
-      {/* FORM */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 'calc(100vh - 65px)', padding: '24px' }}>
-        <div style={{ background: '#0d1117', border: '1px solid #1e2530', padding: '40px', width: '100%', maxWidth: '420px', borderRadius: '12px' }}>
+      <div className="register-wrapper">
+        <div className="register-box">
 
-          <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '28px', fontWeight: 800, color: '#fff', marginBottom: '8px' }}>
-            FYB<span style={{ color: '#00ff87' }}>.</span>
-          </div>
-          <div style={{ color: '#64748b', fontSize: '14px', marginBottom: '24px' }}>Crea el teu compte — és gratis</div>
+          <div className="register-box-logo">FindYour<span>Bet</span></div>
+          <div className="register-subtitle">Crea tu cuenta — es gratis</div>
 
-          {/* ROLE SELECTOR */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
+          <div className="role-selector">
             {[
               { id: 'tipster', icon: '📊', name: 'Tipster', desc: 'Publico apuestas' },
               { id: 'bettor', icon: '🔍', name: 'Apostador', desc: 'Busco tipsters' },
             ].map(r => (
               <div
                 key={r.id}
+                className={`role-card ${role === r.id ? 'selected' : ''}`}
                 onClick={() => setRole(r.id)}
-                style={{
-                  background: role === r.id ? 'rgba(0,255,135,0.1)' : '#161b24',
-                  border: role === r.id ? '2px solid #00ff87' : '2px solid #2a3140',
-                  padding: '16px', borderRadius: '8px', cursor: 'pointer', textAlign: 'center'
-                }}
               >
-                <div style={{ fontSize: '24px', marginBottom: '6px' }}>{r.icon}</div>
-                <div style={{ fontSize: '13px', fontWeight: 600, color: '#e2e8f0' }}>{r.name}</div>
-                <div style={{ fontSize: '11px', color: '#64748b', marginTop: '3px' }}>{r.desc}</div>
+                <div className="role-icon">{r.icon}</div>
+                <div className="role-name">{r.name}</div>
+                <div className="role-desc">{r.desc}</div>
               </div>
             ))}
           </div>
 
-          {/* FIELDS */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '18px' }}>
+          <div className="form-row">
             <div>
-              <label style={labelStyle}>Nom</label>
-              <input type="text" placeholder="El teu nom" value={name} onChange={e => setName(e.target.value)} style={inputStyle} />
+              <label className="form-label">Nombre</label>
+              <input type="text" className="form-input" placeholder="Tu nombre" value={name} onChange={e => setName(e.target.value)} />
             </div>
             <div>
-              <label style={labelStyle}>Usuari</label>
-              <input type="text" placeholder="@usuari" value={user} onChange={e => setUser(e.target.value)} style={inputStyle} />
+              <label className="form-label">Usuario</label>
+              <input type="text" className="form-input" placeholder="@usuario" value={user} onChange={e => setUser(e.target.value)} />
             </div>
           </div>
 
-          <div style={{ marginBottom: '18px' }}>
-            <label style={labelStyle}>Email</label>
-            <input type="email" placeholder="tu@email.com" value={email} onChange={e => setEmail(e.target.value)} style={inputStyle} />
+          <div className="form-group">
+            <label className="form-label">Email</label>
+            <input type="email" className="form-input" placeholder="tu@email.com" value={email} onChange={e => setEmail(e.target.value)} />
           </div>
 
-          <div style={{ marginBottom: '18px' }}>
-            <label style={labelStyle}>Contrasenya</label>
-            <input type="password" placeholder="Mínim 8 caràcters" value={pass} onChange={e => setPass(e.target.value)} style={inputStyle} />
+          <div className="form-group">
+            <label className="form-label">Contraseña</label>
+            <input type="password" className="form-input" placeholder="Mínimo 8 caracteres" value={pass} onChange={e => setPass(e.target.value)} />
           </div>
 
-          <button
-            onClick={handleRegister}
-            style={{ width: '100%', background: '#00ff87', border: 'none', color: '#000', padding: '12px', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: 600, marginTop: '8px' }}
-          >
-            Crear compte
+          <button className="btn-submit" onClick={handleRegister}>
+            Crear cuenta
           </button>
 
-          <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '13px', color: '#64748b' }}>
-            Ja tens compte?{' '}
-            <span onClick={() => navigate('login')} style={{ color: '#00ff87', cursor: 'pointer', fontWeight: 500 }}>
-              Inicia sessió
-            </span>
+          <div className="auth-switch">
+            ¿Ya tienes cuenta?{' '}
+            <a onClick={() => navigate('login')}>Inicia sesión</a>
           </div>
 
         </div>
